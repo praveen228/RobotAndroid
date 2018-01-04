@@ -45,7 +45,7 @@ public class ArrowTab extends Fragment implements View.OnClickListener{
         return rootView;
     }
     //God knows what
-    @Override 
+    @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);
         context = activity;
@@ -55,7 +55,7 @@ public class ArrowTab extends Fragment implements View.OnClickListener{
     public void onClick(View v){
         switch(v.getId()) {
             case R.id.UP:
-                Toast.makeText(context,"UP",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"UP1",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.DOWN:
                 Toast.makeText(context,"DOWN",Toast.LENGTH_SHORT).show();
