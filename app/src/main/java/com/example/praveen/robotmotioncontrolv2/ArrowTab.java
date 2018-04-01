@@ -1,5 +1,6 @@
 package com.example.praveen.robotmotioncontrolv2;
 
+import android.bluetooth.BluetoothAdapter;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,14 +13,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import android.widget.Button;
 import android.app.Activity;
 import android.content.Context;
-
+import android.bluetooth.BluetoothDevice;
 /**
  * Created by PRAVEEN on 14-12-2017.
  */
@@ -27,6 +27,11 @@ import android.content.Context;
 public class ArrowTab extends Fragment implements View.OnClickListener{
     private View rootView;
     Context context;
+    BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+    String deviceName, deviceHardwareAddress;
+    AcceptThread mConnectThread;
+    BluetoothDevice praveen;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,9 +47,14 @@ public class ArrowTab extends Fragment implements View.OnClickListener{
         b_down.setOnClickListener(this);
         b_left.setOnClickListener(this);
         b_right.setOnClickListener(this);
+        for (BluetoothDevice device : pairedDevices) {
+            praveen = device; // TO - DO Select From Multiple Options
+        }
+
+
         return rootView;
     }
-    //God knows what
+    //God knows what, doesn't work if this is removed.
     @Override
     public void onAttach(Activity activity){
         super.onAttach(activity);
@@ -56,9 +66,12 @@ public class ArrowTab extends Fragment implements View.OnClickListener{
         switch(v.getId()) {
             case R.id.UP:
                 Toast.makeText(context,"UP1",Toast.LENGTH_SHORT).show();
+                mConnectThread = new AcceptThread(praveen);
+                mConnectThread.start();
                 break;
             case R.id.DOWN:
                 Toast.makeText(context,"DOWN",Toast.LENGTH_SHORT).show();
+                mConnectThread.cancel();
                 break;
             case R.id.LEFT:
                 Toast.makeText(context,"LEFT",Toast.LENGTH_SHORT).show();

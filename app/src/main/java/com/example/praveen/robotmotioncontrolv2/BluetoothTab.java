@@ -68,7 +68,7 @@ public class BluetoothTab extends Fragment implements View.OnClickListener{
     public void onStart() {
 
         super.onStart();
-
+        //Check if Bluetooth available in device.
         if(BA == null){
             Log.d(msg," NO Bluetooth Available");
         }
