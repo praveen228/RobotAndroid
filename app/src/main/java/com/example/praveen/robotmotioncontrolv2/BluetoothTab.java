@@ -47,10 +47,12 @@ public class BluetoothTab extends Fragment implements View.OnClickListener{
         Button b_off = rootView.findViewById(R.id.off);
         Button b_disc = rootView.findViewById(R.id.discover);
         Button b_list = rootView.findViewById(R.id.list);
+        Button b_connect = rootView.findViewById(R.id.connect);
         b_on.setOnClickListener(this);
         b_off.setOnClickListener(this);
         b_disc.setOnClickListener(this);
         b_list.setOnClickListener(this);
+        b_connect.setOnClickListener(this);
         return rootView;
     }
     //Initializes Bluetooth Adapter
