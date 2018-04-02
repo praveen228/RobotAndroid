@@ -17,6 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Spinner;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ public class BluetoothTab extends Fragment implements View.OnClickListener{
     ListView lv;
     String msg = "Android Log: ";
     Context context;
+    private Spinner spinner1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,14 +104,20 @@ public class BluetoothTab extends Fragment implements View.OnClickListener{
                 pairedDevices = BA.getBondedDevices();
                 Log.d(msg, "Paired devices");
                 ArrayList list = new ArrayList();
-                lv = (ListView) rootView.findViewById(R.id.listView1);
+                //lv = (ListView) rootView.findViewById(R.id.listView1);
                 for (BluetoothDevice bt : pairedDevices)
                     list.add(bt.getName());
                 Toast.makeText(context, "Showing Paired Devices", Toast.LENGTH_SHORT).show();
-                ArrayAdapter adapter = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, list);
+                //ArrayAdapter adapter = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, list);
                 Log.d(msg,"Done");
-                lv.setAdapter(adapter);
+                spinner1 = (Spinner) rootView.findViewById(R.id.spinner1);
+                ArrayAdapter adapter = new ArrayAdapter(getActivity().getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,list);
+                //lv.setAdapter(adapter);
+                spinner1.setAdapter(adapter);
             break;
+            case R.id.connect:
+                Toast.makeText(context,"Connecting..", Toast.LENGTH_LONG).show();
+                break;
         }
     }
 }
