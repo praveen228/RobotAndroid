@@ -19,8 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements ArrowTab.OnHeadlineSelectedListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -30,13 +31,13 @@ public class MainActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    public SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
+    public TabLayout tabLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -90,14 +91,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * A placeholder fragment containing a simple view.
-     */
-
-
-    /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
+    public void onArticleSelected(int position) {
+        System.out.println("Sent: " + Integer.toString(position));
+        BluetoothTab btFragment = (BluetoothTab) mSectionsPagerAdapter.getItem(0);
+
+        //Method Called here from the fragment - Send to Bluetooth Fragment
+
+         if (btFragment != null) {
+        // If article frag is available, we're in two-pane layout...
+
+        // Call a method in the ArticleFragment to update its content
+             btFragment.sendToCar(position);
+         }
+         //else{
+        // Otherwise, we're in the one-pane layout and must swap frags...
+
+        // Create fragment and give it an argument for the selected article
+        //ArticleFragment newFragment = new ArticleFragment();
+        //Bundle args = new Bundle();
+        //args.putInt(ArticleFragment.ARG_POSITION, position);
+        //newFraadgment.setArguments(args);
+
+        //FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        //transaction.replace(R.id.fragment_container, newFragment);
+        //transaction.addToBackStack(null);
+
+        // Commit the transaction
+        //transaction.commit();
+    }
+
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -106,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch(position){
+            switch (position) {
                 case 0:
                     BluetoothTab tab1 = new BluetoothTab();
                     return tab1;
@@ -139,5 +168,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+
     }
 }

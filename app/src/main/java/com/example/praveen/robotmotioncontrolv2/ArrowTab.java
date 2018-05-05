@@ -30,8 +30,12 @@ public class ArrowTab extends Fragment implements View.OnClickListener{
     BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
     String deviceName, deviceHardwareAddress;
-    AcceptThread mConnectThread;
     BluetoothDevice praveen;
+    //Interface Method
+    OnHeadlineSelectedListener mCallback;
+    public interface OnHeadlineSelectedListener{
+        public void onArticleSelected(int position);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -50,8 +54,6 @@ public class ArrowTab extends Fragment implements View.OnClickListener{
         for (BluetoothDevice device : pairedDevices) {
             praveen = device; // TO - DO Select From Multiple Options
         }
-
-
         return rootView;
     }
     //God knows what, doesn't work if this is removed.
@@ -59,6 +61,13 @@ public class ArrowTab extends Fragment implements View.OnClickListener{
     public void onAttach(Activity activity){
         super.onAttach(activity);
         context = activity;
+
+        try {
+            mCallback = (OnHeadlineSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()+ " must implement OnHeadlineSelectedListener");
+        }
+
     }
     //part of listener activity, executes when corresponding listener is clicked
     @Override
@@ -66,18 +75,19 @@ public class ArrowTab extends Fragment implements View.OnClickListener{
         switch(v.getId()) {
             case R.id.UP:
                 Toast.makeText(context,"UP1",Toast.LENGTH_SHORT).show();
-                mConnectThread = new AcceptThread(praveen);
-                mConnectThread.start();
+                mCallback.onArticleSelected(1);
                 break;
             case R.id.DOWN:
                 Toast.makeText(context,"DOWN",Toast.LENGTH_SHORT).show();
-                mConnectThread.cancel();
+                mCallback.onArticleSelected(2);
                 break;
             case R.id.LEFT:
                 Toast.makeText(context,"LEFT",Toast.LENGTH_SHORT).show();
+                mCallback.onArticleSelected(3);
                 break;
             case R.id.RIGHT:
                 Toast.makeText(context,"RIGHT",Toast.LENGTH_SHORT).show();
+                mCallback.onArticleSelected(4);
                 break;
         }
     }

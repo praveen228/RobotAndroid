@@ -22,10 +22,8 @@ public class AcceptThread extends Thread {
         BluetoothSocket tmp = null;
         mmDevice = Device;
         try {
-            if (mmDevice != null)
-            {
+            if (mmDevice != null){
                 tmp = Device.createRfcommSocketToServiceRecord(mmDevice.getUuids()[0].getUuid());
-
             }
             else tmp = null;
             // MY_UUID is the app's UUID string, also used by the client code.
@@ -59,6 +57,10 @@ public class AcceptThread extends Thread {
             // manageMyConnectedSocket(socket);
             // mmServerSocket.close();
             //break;
+            ConnectedThread mConnectedThread = new ConnectedThread(mmSocket);
+            mConnectedThread.start();
+            //mConnectedThread.write("A".getBytes());
+            //mConnectedThread.write("L".getBytes());
         }
 
     }
@@ -68,7 +70,7 @@ public class AcceptThread extends Thread {
         try {
             mmSocket.close();
         } catch (IOException e) {
-            // Log.e(TAG, "Could not close the connect socket", e);
+             //Log.e(TAG, "Could not close the connect socket", e);
         }
     }
 }

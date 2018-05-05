@@ -91,4 +91,10 @@
         android:onClick="onClick"
         android:text="Connect" />
 
+  <!--  <fragment android:name="com.example.praveen.robotmotioncontrolv2.BluetoothTab"
+        android:id="@+id/bluetoothTab"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+   -->
 </RelativeLayout>

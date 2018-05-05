@@ -34,10 +34,12 @@ public class BluetoothTab extends Fragment implements View.OnClickListener{
     private BluetoothAdapter BA;
     private Set<BluetoothDevice> pairedDevices;
     private View rootView;
-    ListView lv;
+    AcceptThread mConnectThread;
+    BluetoothDevice selected_c;
     String msg = "Android Log: ";
     Context context;
     private Spinner spinner1;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +62,6 @@ public class BluetoothTab extends Fragment implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BA = BluetoothAdapter.getDefaultAdapter();
-
     }
 
     @Override
@@ -80,6 +81,9 @@ public class BluetoothTab extends Fragment implements View.OnClickListener{
         else {
             Log.d(msg,"Bluetooth Available");
         }
+    }
+    public void sendToCar(int position){
+        System.out.println("Logged "+ Integer.toString(position));
     }
     @Override
     public void onClick(View v){
@@ -106,20 +110,31 @@ public class BluetoothTab extends Fragment implements View.OnClickListener{
                 pairedDevices = BA.getBondedDevices();
                 Log.d(msg, "Paired devices");
                 ArrayList list = new ArrayList();
-                //lv = (ListView) rootView.findViewById(R.id.listView1);
                 for (BluetoothDevice bt : pairedDevices)
                     list.add(bt.getName());
                 Toast.makeText(context, "Showing Paired Devices", Toast.LENGTH_SHORT).show();
-                //ArrayAdapter adapter = new ArrayAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, list);
                 Log.d(msg,"Done");
                 spinner1 = (Spinner) rootView.findViewById(R.id.spinner1);
                 ArrayAdapter adapter = new ArrayAdapter(getActivity().getApplicationContext(),android.R.layout.simple_spinner_dropdown_item,list);
-                //lv.setAdapter(adapter);
                 spinner1.setAdapter(adapter);
             break;
             case R.id.connect:
+                String selectedDevice = String.valueOf(spinner1.getSelectedItem());
                 Toast.makeText(context,"Connecting..", Toast.LENGTH_LONG).show();
+                String selected = String.valueOf(spinner1.getSelectedItem());
+                for(BluetoothDevice device: pairedDevices){
+                    if(selected.equals(device.getName())){
+                        selected_c = device;
+                        break;
+                    }
+                }
+                mConnectThread = new AcceptThread(selected_c);
+                mConnectThread.start();
+
+
+                //mConnectThread.cancel();
                 break;
         }
     }
+
 }
