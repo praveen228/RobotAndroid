@@ -1,6 +1,7 @@
 package com.example.praveen.robotmotioncontrolv2;
 
 import android.bluetooth.BluetoothAdapter;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ public class ArrowTab extends Fragment implements View.OnClickListener{
     //Interface Method
     OnHeadlineSelectedListener mCallback;
     public interface OnHeadlineSelectedListener{
-        public void onArticleSelected(int position);
+        public void sendDataToCar(Datapacket packet);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,22 +73,27 @@ public class ArrowTab extends Fragment implements View.OnClickListener{
     //part of listener activity, executes when corresponding listener is clicked
     @Override
     public void onClick(View v){
+        Datapacket newdata;
         switch(v.getId()) {
             case R.id.UP:
                 Toast.makeText(context,"UP1",Toast.LENGTH_SHORT).show();
-                mCallback.onArticleSelected(1);
+                newdata = new Datapacket(Integer.toString(100),Integer.toString(600));
+                mCallback.sendDataToCar(newdata);
                 break;
             case R.id.DOWN:
                 Toast.makeText(context,"DOWN",Toast.LENGTH_SHORT).show();
-                mCallback.onArticleSelected(2);
+                newdata = new Datapacket(Integer.toString(200),Integer.toString(500));
+                mCallback.sendDataToCar(newdata);
                 break;
             case R.id.LEFT:
                 Toast.makeText(context,"LEFT",Toast.LENGTH_SHORT).show();
-                mCallback.onArticleSelected(3);
+                newdata = new Datapacket(Integer.toString(300),Integer.toString(900));
+                mCallback.sendDataToCar(newdata);
                 break;
             case R.id.RIGHT:
                 Toast.makeText(context,"RIGHT",Toast.LENGTH_SHORT).show();
-                mCallback.onArticleSelected(4);
+                newdata = new Datapacket(Integer.toString(400),Integer.toString(200));
+                mCallback.sendDataToCar(newdata);
                 break;
         }
     }

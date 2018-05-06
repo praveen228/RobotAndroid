@@ -1,5 +1,7 @@
 package com.example.praveen.robotmotioncontrolv2;
 
+
+import android.provider.ContactsContract;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -94,8 +96,8 @@ public class MainActivity extends AppCompatActivity  implements ArrowTab.OnHeadl
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public void onArticleSelected(int position) {
-        System.out.println("Sent: " + Integer.toString(position));
+    public void sendDataToCar(Datapacket datapacket) {
+        //System.out.println("Sent: " + Integer.toString(position));
         BluetoothTab btFragment = (BluetoothTab) mSectionsPagerAdapter.getItem(0);
 
         //Method Called here from the fragment - Send to Bluetooth Fragment
@@ -104,9 +106,10 @@ public class MainActivity extends AppCompatActivity  implements ArrowTab.OnHeadl
         // If article frag is available, we're in two-pane layout...
 
         // Call a method in the ArticleFragment to update its content
-             btFragment.sendToCar(position);
+             btFragment.sendDataToCar(datapacket);
          }
          //else{
+
         // Otherwise, we're in the one-pane layout and must swap frags...
 
         // Create fragment and give it an argument for the selected article

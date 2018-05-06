@@ -55,6 +55,7 @@ public class ConnectedThread extends Thread {
             }
         }
     }
+
     public void write(byte[] bytes){
         try{
             mmOutStream.write(bytes);

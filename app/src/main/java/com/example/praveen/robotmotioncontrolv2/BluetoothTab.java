@@ -7,6 +7,7 @@ package com.example.praveen.robotmotioncontrolv2;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -82,8 +83,9 @@ public class BluetoothTab extends Fragment implements View.OnClickListener{
             Log.d(msg,"Bluetooth Available");
         }
     }
-    public void sendToCar(int position){
-        System.out.println("Logged "+ Integer.toString(position));
+    public void sendDataToCar(Datapacket datapacket){
+        //System.out.println("Logged "+ Integer.toString(position));
+        System.out.println(datapacket.getPacket());
     }
     @Override
     public void onClick(View v){
@@ -130,8 +132,6 @@ public class BluetoothTab extends Fragment implements View.OnClickListener{
                 }
                 mConnectThread = new AcceptThread(selected_c);
                 mConnectThread.start();
-
-
                 //mConnectThread.cancel();
                 break;
         }
