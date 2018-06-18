@@ -16,6 +16,7 @@ public class AcceptThread extends Thread {
     private final BluetoothSocket mmSocket;
     private final BluetoothDevice mmDevice;
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    ConnectedThread mConnectedThread;
     public AcceptThread(BluetoothDevice Device) {
         // Use a temporary object that is later assigned to mmServerSocket
         // because mmServerSocket is final.
@@ -57,14 +58,16 @@ public class AcceptThread extends Thread {
             // manageMyConnectedSocket(socket);
             // mmServerSocket.close();
             //break;
-            ConnectedThread mConnectedThread = new ConnectedThread(mmSocket);
+            mConnectedThread = new ConnectedThread(mmSocket);
             mConnectedThread.start();
             //mConnectedThread.write("A".getBytes());
             //mConnectedThread.write("L".getBytes());
         }
 
     }
-
+    public void write_to(byte[] datatocar){
+        mConnectedThread.write(datatocar);
+    }
     // Closes the connect socket and causes the thread to finish.
     public void cancel() {
         try {

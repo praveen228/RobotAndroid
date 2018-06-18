@@ -16,8 +16,8 @@ public class Datapacket {
         this.speed = speed;
     }
 
-    public String getPacket() {
+    public byte[] getPacket() {
         packet = syncBits + separator + direction + separator + speed + syncBits;
-        return packet;
+        return packet.getBytes();
     }
 }

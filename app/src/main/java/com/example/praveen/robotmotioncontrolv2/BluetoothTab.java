@@ -85,7 +85,8 @@ public class BluetoothTab extends Fragment implements View.OnClickListener{
     }
     public void sendDataToCar(Datapacket datapacket){
         //System.out.println("Logged "+ Integer.toString(position));
-        System.out.println(datapacket.getPacket());
+        //System.out.println(datapacket.getPacket());
+        mConnectThread.write_to(datapacket.getPacket());
     }
     @Override
     public void onClick(View v){
